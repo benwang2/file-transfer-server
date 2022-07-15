@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>File upload demo</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      enctype="multipart/form-data"
+      action="/up"
+      method="POST"
+    >
+      <input class="input file-input" type="file" name="file" multiple />
+      <input type="text" id="f-url">
+      <input type="text" id="f-data" name="data" value='{"type":"file","url":"hey"}' hidden>
+      <button class="button" type="submit">Submit</button>
+    </form>
+    <script defer>
+      let f_url = document.getElementById("f-url")
+      let f_data = document.getElementById("f-data")
+      f_url.addEventListener('change',()=>{
+        console.log('{"url":"'+f_url.value+'"}')
+        f_data.setAttribute('value','{"type":"file","url":"'+f_url.value+'"}')
+      })
+    </script>
+  </body>
+</html>
