@@ -25,6 +25,7 @@ chrome-user-data
 *.swo
 
 store/
+env.go
 
 packages/react-devtools-core/dist
 packages/react-devtools-extensions/chrome/build
@@ -60,3 +61,4 @@ packages/react-devtools-timeline/dist
 
 # Go workspace file
 go.work
+server/env/env.go
