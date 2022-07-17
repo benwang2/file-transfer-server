@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"time"
 )
 
 var words []string
@@ -21,6 +22,7 @@ func init() {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
+	rand.Seed(time.Now().UnixNano())
 
 	for scanner.Scan() {
 		words = append(words, scanner.Text())

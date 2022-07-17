@@ -8,6 +8,7 @@ import (
 	"os"
 	"server/keygen"
 	"server/models"
+	"strings"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -45,6 +46,8 @@ func SaveFileToDatabase(w http.ResponseWriter, resource *models.Resource) *model
 	fmt.Printf("Saving to database;\n")
 
 	var resp models.Response
+	resource.URL = strings.TrimSpace(resource.URL)
+
 	if resource.URL == "" {
 		resource.URL = generateUniqueURL(resource.URLType)
 		resp.StatusCode = 200
@@ -102,12 +105,15 @@ func isURLUnique(url string) bool {
 
 func generateUniqueURL(urlType string) string {
 	var url string
+	fmt.Println("url is nil == \"" + url + "\"")
 	for !isURLUnique(url) {
-		if urlType == "word" {
-			url = keygen.Word()
-		} else {
-			url = keygen.Chars(3)
-		}
+		// if urlType == "word" {
+		// 	url = keygen.Word()
+		// } else {
+		// 	url = keygen.Chars(3)
+		// }
+		url = keygen.Word()
+		fmt.Printf("Generated url=%s\n", url)
 	}
 
 	return url
