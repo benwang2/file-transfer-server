@@ -17,21 +17,25 @@ import (
 var db *sql.DB
 
 func setupTables() {
-	db.Exec(
-		`CREATE TABLE IF NOT EXISTS resources (
-			resourcePath VARCHAR(2083) NOT NULL,
-            resourceType INT NOT NULL,
-			url VARCHAR(2000) NOT NULL,
-			created DATETIME NOT NULL,
-			track TINYINT(1) NOT NULL DEFAULT 0,
-			size INT NOT NULL,
-			expires DATETIME NULL,
-			accessKey VARCHAR(255) NULL,
-			UNIQUE INDEX resourcePath_UNIQUE (resourcePath ASC) VISIBLE,
-			UNIQUE INDEX url_UNIQUE (url ASC) VISIBLE,
-			PRIMARY KEY (url)
-		) 	ENGINE = InnoDB
-	`)
+	tx, _ := db.Begin()
+	_, err := tx.Exec(
+		"CREATE TABLE IF NOT EXISTS `resources` (" +
+			"`resourcePath` VARCHAR(2083) NOT NULL," +
+			"`resourceType` INT NOT NULL," +
+			"`fileName` VARCHAR(260) NOT NULL," +
+			"`url` VARCHAR(64) NOT NULL," +
+			"`created` DATETIME NOT NULL," +
+			"`track` TINYINT(1) NOT NULL DEFAULT 0," +
+			"`size` INT NOT NULL," +
+			"`expires` DATETIME NULL," +
+			"`accessKey` VARCHAR(255) NULL," +
+			"UNIQUE INDEX `url_UNIQUE` (url ASC) VISIBLE," +
+			"PRIMARY KEY (url)" +
+			") 	ENGINE = InnoDB")
+	if err != nil {
+		fmt.Println(err)
+	}
+	tx.Commit()
 }
 
 func SaveFileToDatabase(w http.ResponseWriter, resource *models.Resource) *models.Response {
@@ -57,6 +61,8 @@ func SaveFileToDatabase(w http.ResponseWriter, resource *models.Resource) *model
 		return nil
 	}
 
+	fmt.Printf("database.go url=%s\n", resource.URL)
+
 	today := time.Now()
 	created := today.Format(time.RFC3339)
 	expires := today.AddDate(0, 0, 0).Format(time.RFC3339)
@@ -72,10 +78,10 @@ func SaveFileToDatabase(w http.ResponseWriter, resource *models.Resource) *model
 		castedType = 1
 	}
 
-	var query string = "INSERT INTO resources ( `resourcePath`, `url`, `resourceType`, `created`, `track`, `size`, `expires`, `accessKey` ) " +
-		`VALUES ( "%s", "%s", %d, "%s", %d, %d, "%s", "%s" )`
+	var query string = "INSERT INTO resources ( `fileName`, `resourcePath`, `url`, `resourceType`, `created`, `track`, `size`, `expires`, `accessKey` ) " +
+		`VALUES ( "%s", "%s", "%s", %d, "%s", %d, %d, "%s", "%s" )`
 
-	query = fmt.Sprintf(query, resource.Path, resource.URL, castedType, string(created), shouldTrack, int64(resource.Header.Size), string(expires), resource.Password)
+	query = fmt.Sprintf(query, resource.Header.Filename, resource.Path, resource.URL, castedType, string(created), shouldTrack, int64(resource.Header.Size), string(expires), resource.Password)
 	if _, err := tx.Exec(query); err != nil {
 		return nil
 	}
@@ -105,15 +111,12 @@ func isURLUnique(url string) bool {
 
 func generateUniqueURL(urlType string) string {
 	var url string
-	fmt.Println("url is nil == \"" + url + "\"")
 	for !isURLUnique(url) {
-		// if urlType == "word" {
-		// 	url = keygen.Word()
-		// } else {
-		// 	url = keygen.Chars(3)
-		// }
-		url = keygen.Word()
-		fmt.Printf("Generated url=%s\n", url)
+		if urlType == "word" {
+			url = keygen.Word()
+		} else {
+			url = keygen.Chars(3)
+		}
 	}
 
 	return url
@@ -121,12 +124,12 @@ func generateUniqueURL(urlType string) string {
 
 func GetResourceByKey(w http.ResponseWriter, key string) (*models.DBResource, error) {
 	row := db.QueryRow(
-		"SELECT resourcePath, resourceType, created, track, size, expires, accessKey " +
+		"SELECT resourcePath, resourceType, fileName, created, track, size, expires, accessKey " +
 			"FROM resources " +
 			"WHERE `url`=\"" + key + "\"")
 	var resource models.DBResource
 
-	err := row.Scan(&resource.Path, &resource.Type, &resource.Created, &resource.Track, &resource.Size, &resource.Expires, &resource.AccessKey)
+	err := row.Scan(&resource.Path, &resource.Type, &resource.FileName, &resource.Created, &resource.Track, &resource.Size, &resource.Expires, &resource.AccessKey)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, err
@@ -141,8 +144,9 @@ func GetResourceByKey(w http.ResponseWriter, key string) (*models.DBResource, er
 func Start() {
 	fmt.Println("Connecting to database")
 	databaseURL := os.Getenv("DB_USERNAME") + ":" + os.Getenv("DB_PASSWORD") + "@tcp(" + os.Getenv("DB_HOST") + ":" + os.Getenv("DB_PORT") + ")/" + os.Getenv("DB_NAME")
-	fmt.Println(databaseURL)
+	fmt.Println("database url=" + databaseURL)
 	db, _ = sql.Open("mysql", databaseURL)
+	setupTables()
 
 	// if err != nil {
 	// 	panic(err)

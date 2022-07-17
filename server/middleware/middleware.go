@@ -9,7 +9,6 @@ import (
 	"server/filestorage"
 	"server/keygen"
 	"server/models"
-	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -37,9 +36,7 @@ func Access(w http.ResponseWriter, r *http.Request) {
 		// 1 : file
 		// 2 : redirect
 		if resource.Type == 1 {
-			dirs := strings.Split(resource.Path, "/")
-			name := dirs[len(dirs)-1]
-			w.Header().Set("Content-Disposition", "attachment; filename="+name)
+			w.Header().Set("Content-Disposition", "attachment; filename="+resource.FileName)
 			w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
 
 			http.ServeFile(w, r, resource.Path)

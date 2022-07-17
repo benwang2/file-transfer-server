@@ -28,6 +28,7 @@ type Resource struct {
 }
 
 type DBResource struct {
+	FileName  string
 	Path      string
 	Type      int
 	URL       string
