@@ -1,12 +1,13 @@
-package filestorage
+package storage
 
 import (
 	"bytes"
-	"crypto/md5"
+	"crypto/sha256"
 	"encoding/hex"
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -15,22 +16,24 @@ import (
 	"strings"
 )
 
-func md5sum(file multipart.File) (string, error) {
-	hash := md5.New()
-	if _, err := io.Copy(hash, file); err != nil {
-		return "", err
+func checksum(buf bytes.Buffer) (string, error) {
+	hasher := sha256.New()
+	if _, err := io.Copy(hasher, &buf); err != nil {
+		log.Fatal(err)
 	}
-	return hex.EncodeToString(hash.Sum(nil)), nil
+
+	return hex.EncodeToString(hasher.Sum(nil)), nil
 }
 
 func File(w http.ResponseWriter, r models.Resource, f multipart.File, h *multipart.FileHeader) (models.Response, error) {
 
 	var resp *models.Response
 	var buf bytes.Buffer
-	io.Copy(&buf, f)
-	hash, _ := md5sum(f)
 
 	defer f.Close()
+	io.Copy(&buf, f)
+
+	hash, _ := checksum(buf)
 
 	pathSplit := strings.Split(h.Filename, ".")
 	path := "./store/" + hash + "." + pathSplit[len(pathSplit)-1]
@@ -38,8 +41,8 @@ func File(w http.ResponseWriter, r models.Resource, f multipart.File, h *multipa
 	r.File = f
 	r.Header = h
 
-	fmt.Printf("filestorage.go path=%s;\n", path)
-	resp = database.SaveFileToDatabase(w, &r)
+	fmt.Printf("storage.go path=%s;\n", path)
+	resp = database.SaveToDatabase(w, &r)
 
 	if resp == nil {
 		return models.Response{StatusCode: 400, Message: "Resource already exists."}, nil
@@ -49,8 +52,9 @@ func File(w http.ResponseWriter, r models.Resource, f multipart.File, h *multipa
 	resp.StatusCode = 200
 	resp.Data = r.URL
 
+	fmt.Printf("File uploaded with checksum:%s\n", hash)
 	if _, err := os.Stat(path); err == nil {
-		fmt.Println("filestorage.go File already exists - expected behavior.")
+		fmt.Println("storage.go File already exists - expected behavior.")
 	} else if errors.Is(err, os.ErrNotExist) {
 		out, _ := os.Create(path)
 		out.Write([]byte(buf.String()))
@@ -63,10 +67,15 @@ func File(w http.ResponseWriter, r models.Resource, f multipart.File, h *multipa
 	return *resp, nil
 }
 
-func URL(r models.Resource) (models.Response, error) {
+func URL(w http.ResponseWriter, r models.Resource) (models.Response, error) {
 	fmt.Println("Processing url")
-	var resp models.Response
+	fmt.Println("link to " + r.Destination)
+	var resp *models.Response
 
-	resp.Message = "Hello"
-	return resp, nil
+	resp = database.SaveToDatabase(w, &r)
+
+	resp.Message = "Status OK"
+	resp.StatusCode = 200
+	resp.Data = r.URL
+	return *resp, nil
 }

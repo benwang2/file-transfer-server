@@ -73,6 +73,7 @@ cos
 cot
 cow
 cry
+cub
 cue
 cum
 cup
@@ -98,6 +99,7 @@ din
 dip
 dir
 dis
+doc
 doe
 dog
 don
@@ -216,6 +218,7 @@ jew
 jim
 job
 joe
+jot
 joy
 jug
 ken
@@ -315,6 +318,7 @@ pig
 pin
 pit
 ply
+pop
 pot
 pre
 pro
@@ -330,6 +334,7 @@ raw
 ray
 red
 ref
+res
 rev
 rex
 rid
@@ -364,6 +369,7 @@ shy
 sic
 sig
 sin
+sip
 sir
 sit
 six
@@ -473,14 +479,17 @@ aims
 aint
 airs
 airy
+ajar
 akin
 alan
 alas
+algo
 ally
 alma
 alms
 alps
 also
+alto
 amen
 amid
 amor
@@ -522,6 +531,7 @@ bald
 ball
 balm
 band
+bane
 bang
 bank
 bard
@@ -596,6 +606,7 @@ brim
 brow
 buck
 buds
+bulb
 bulk
 bull
 bunk
@@ -607,6 +618,7 @@ busy
 butt
 buys
 buzz
+byte
 cafe
 cage
 cake
@@ -616,6 +628,7 @@ calm
 came
 camp
 cane
+cans
 cant
 cape
 caps
@@ -648,6 +661,7 @@ clad
 clan
 clap
 clay
+clef
 club
 clue
 coal
@@ -727,6 +741,7 @@ diet
 dine
 dire
 dirt
+disc
 dish
 disk
 dive
@@ -902,6 +917,7 @@ gold
 golf
 gone
 good
+goth
 gout
 gown
 gray
@@ -978,6 +994,7 @@ hole
 holt
 holy
 home
+homo
 hood
 hoof
 hook
@@ -985,6 +1002,7 @@ hoop
 hope
 horn
 hose
+hoss
 host
 hour
 howl
@@ -1023,6 +1041,7 @@ isnt
 item
 itll
 jack
+jade
 jail
 jake
 jane
@@ -1071,6 +1090,7 @@ knob
 knot
 know
 knox
+kong
 lace
 lack
 lads
@@ -1106,6 +1126,7 @@ leet
 left
 legs
 lend
+lens
 lent
 leon
 less
@@ -1261,6 +1282,7 @@ noir
 none
 nook
 noon
+nord
 nose
 note
 noun
@@ -1294,6 +1316,7 @@ over
 owed
 owen
 owes
+owls
 owns
 oxen
 pace
@@ -1348,10 +1371,12 @@ play
 plea
 plot
 plow
+plug
 plum
 plus
 poem
 poet
+poke
 pole
 polo
 pomp
@@ -1371,6 +1396,7 @@ pray
 pref
 prey
 prof
+prop
 puff
 pull
 pulp
@@ -1465,6 +1491,7 @@ sake
 sale
 salt
 same
+sams
 sand
 sane
 sang
@@ -1477,6 +1504,7 @@ save
 says
 scar
 scot
+scum
 seal
 seas
 seat
@@ -1527,6 +1555,7 @@ skip
 slab
 slap
 slay
+sled
 slew
 slid
 slim
@@ -1557,6 +1586,7 @@ sour
 sous
 sown
 span
+spar
 spat
 sped
 spin
@@ -1598,6 +1628,7 @@ tank
 tape
 tard
 task
+taxi
 team
 tear
 tell
@@ -1629,6 +1660,7 @@ tint
 tiny
 tips
 tire
+toad
 todo
 toes
 toil
@@ -1719,6 +1751,7 @@ ward
 ware
 warm
 warn
+warp
 wars
 wary
 wash
@@ -1777,6 +1810,7 @@ wrap
 writ
 yard
 yarn
+yawn
 year
 yell
 yoke
@@ -1819,6 +1853,7 @@ afore
 after
 again
 agent
+agile
 agony
 agree
 ahead
@@ -1908,6 +1943,7 @@ balls
 balmy
 bands
 banks
+bards
 bared
 barge
 barns
@@ -1942,11 +1978,13 @@ berry
 berth
 beset
 bible
+biddy
 bills
 binds
 birch
 birds
 birth
+bites
 black
 blade
 blake
@@ -2030,6 +2068,7 @@ bulky
 bulls
 bully
 bunch
+bunny
 burke
 burly
 burns
@@ -2039,6 +2078,8 @@ bushy
 bussy
 cabin
 cable
+cache
+cadet
 cairo
 cakes
 calls
@@ -2089,6 +2130,7 @@ chess
 chest
 chief
 child
+chili
 chill
 china
 chips
@@ -2096,6 +2138,7 @@ choir
 choke
 chord
 chose
+chums
 chute
 cider
 cigar
@@ -2104,6 +2147,7 @@ civic
 civil
 claim
 clang
+clans
 clash
 clasp
 class
@@ -2128,6 +2172,7 @@ clung
 coach
 coast
 coats
+cocks
 cocoa
 codes
 coils
@@ -2141,6 +2186,7 @@ cooks
 coral
 cords
 corps
+cosmo
 costs
 couch
 cough
@@ -2149,6 +2195,7 @@ count
 coups
 court
 cover
+covet
 crack
 craft
 crane
@@ -2202,11 +2249,13 @@ david
 dazed
 deals
 dealt
+dears
 death
 debts
 decay
 decks
 deeds
+deeps
 defer
 deity
 delay
@@ -2226,12 +2275,14 @@ didst
 digit
 dimly
 dined
+diner
 dingy
 dirty
 ditch
 ditto
 dived
 dizzy
+docks
 dodge
 dogma
 doing
@@ -2268,6 +2319,7 @@ drugs
 drums
 drunk
 dryly
+duchy
 ducks
 dukes
 durst
@@ -2332,6 +2384,7 @@ faced
 faces
 facts
 faded
+fades
 fails
 faint
 faire
@@ -2356,6 +2409,7 @@ feast
 feats
 feeds
 feels
+feign
 femme
 fence
 ferns
@@ -2411,6 +2465,7 @@ flung
 flush
 flute
 focus
+foggy
 folds
 folio
 folks
@@ -2486,6 +2541,7 @@ globe
 gloom
 glory
 glove
+glows
 goals
 goats
 godly
@@ -2531,6 +2587,7 @@ guide
 guile
 guilt
 guise
+gusto
 gusts
 habit
 hadnt
@@ -2541,6 +2598,7 @@ handy
 hangs
 happy
 hardy
+harem
 harry
 harsh
 hasnt
@@ -2551,6 +2609,7 @@ hated
 haunt
 haven
 havoc
+hawks
 hazel
 heads
 heaps
@@ -2602,6 +2661,7 @@ hours
 house
 hover
 human
+humid
 humor
 hurry
 hurts
@@ -2630,6 +2690,7 @@ issue
 italy
 items
 ivory
+jaded
 james
 japan
 jelly
@@ -2651,6 +2712,7 @@ kills
 kinds
 kings
 kitty
+knack
 knave
 kneel
 knees
@@ -2664,6 +2726,7 @@ knows
 label
 labor
 laced
+laces
 lacks
 laden
 ladys
@@ -2747,9 +2810,12 @@ loyal
 lucid
 lucky
 lumps
+lunar
 lunch
 lungs
+lupin
 lured
+lusts
 lusty
 lying
 lyric
@@ -2790,6 +2856,7 @@ meats
 medal
 media
 meets
+melts
 mercy
 merit
 merry
@@ -2820,9 +2887,12 @@ moods
 moody
 moons
 moore
+moors
+moose
 moral
 morse
 mossy
+moths
 motor
 motto
 mould
@@ -2835,15 +2905,18 @@ moved
 moves
 muddy
 mules
+mummy
 mused
 muses
 music
+musty
 myths
 nails
 naive
 naked
 named
 names
+nasal
 nasty
 naval
 needs
@@ -2874,6 +2947,7 @@ nouns
 novel
 nurse
 nymph
+oasis
 oaths
 occur
 ocean
@@ -2902,6 +2976,7 @@ outer
 owing
 owned
 owner
+oxide
 paced
 paces
 packs
@@ -2911,6 +2986,7 @@ pages
 pains
 paint
 pairs
+paled
 paler
 palms
 panel
@@ -2941,6 +3017,7 @@ pence
 penny
 perch
 peril
+pesos
 peter
 petit
 petty
@@ -2949,6 +3026,7 @@ piano
 picks
 piece
 piety
+pikes
 piled
 piles
 pilot
@@ -2967,6 +3045,7 @@ plant
 plate
 plato
 plays
+plaza
 plead
 plied
 plots
@@ -2974,6 +3053,7 @@ pluck
 plumb
 plume
 plump
+plums
 poems
 poets
 point
@@ -3022,6 +3102,7 @@ pupil
 puppy
 purer
 purse
+quail
 quant
 quart
 quasi
@@ -3051,6 +3132,7 @@ ranch
 range
 ranks
 rapid
+rated
 rates
 ratio
 raven
@@ -3088,6 +3170,7 @@ ridge
 rifle
 right
 rigid
+rigor
 rings
 ripen
 risen
@@ -3167,6 +3250,7 @@ score
 scorn
 scott
 scout
+scowl
 scrap
 screw
 scrub
@@ -3182,6 +3266,7 @@ sells
 sends
 senor
 sense
+serfs
 serve
 seven
 sewed
@@ -3201,6 +3286,7 @@ sharp
 shave
 shawl
 sheds
+sheen
 sheep
 sheer
 sheet
@@ -3236,6 +3322,7 @@ sighs
 sight
 signs
 silks
+silky
 silly
 since
 sings
@@ -3261,6 +3348,8 @@ sleep
 slept
 slice
 slide
+slimy
+sling
 slips
 slope
 slung
@@ -3298,6 +3387,7 @@ sorts
 souls
 sound
 south
+sowed
 space
 spade
 spain
@@ -3316,6 +3406,7 @@ spent
 spice
 spied
 spies
+spike
 spine
 spire
 spite
@@ -3328,6 +3419,7 @@ spots
 spray
 spurs
 squad
+squat
 stack
 staff
 stage
@@ -3427,6 +3519,7 @@ tardy
 tarry
 tasks
 taste
+taunt
 tawny
 taxed
 taxes
@@ -3489,6 +3582,7 @@ today
 todos
 token
 tones
+tonic
 tools
 tooth
 topic
@@ -3526,6 +3620,7 @@ trout
 truce
 truck
 truly
+trump
 trunk
 trust
 truth
@@ -3632,6 +3727,7 @@ weave
 wedge
 weeds
 weeks
+weeps
 weigh
 weird
 wells

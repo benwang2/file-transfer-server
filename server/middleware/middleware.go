@@ -4,11 +4,12 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"server/database"
-	"server/filestorage"
 	"server/keygen"
 	"server/models"
+	"server/storage"
 
 	"github.com/gorilla/mux"
 )
@@ -23,8 +24,10 @@ func RandKey(w http.ResponseWriter, r *http.Request) {
 }
 
 func Access(w http.ResponseWriter, r *http.Request) {
+
 	vars := mux.Vars(r)
 	resource, err := database.GetResourceByKey(w, vars["key"])
+
 	if err != nil {
 		if err == sql.ErrNoRows {
 			fmt.Printf("Found no resource by key=%s\n", vars["key"])
@@ -35,13 +38,27 @@ func Access(w http.ResponseWriter, r *http.Request) {
 	} else {
 		// 1 : file
 		// 2 : redirect
-		if resource.Type == 1 {
-			w.Header().Set("Content-Disposition", "attachment; filename="+resource.FileName)
-			w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+		if r.Method == "GET" {
+			if resource.Type == 1 {
+				// Serve file download page
+			} else if resource.Type == 2 && resource.AccessKey == "" {
+				http.Redirect(w, r, resource.Path, http.StatusTemporaryRedirect)
+			}
+		} else if r.Method == "POST" {
+			if err := r.ParseForm(); err != nil {
+				log.Fatalf("ParseForm() err: %v", err)
+				return
+			}
 
-			http.ServeFile(w, r, resource.Path)
-		} else if resource.Type == 2 {
-
+			if r.FormValue("accessKey") == resource.AccessKey {
+				if resource.Type == 1 {
+					w.Header().Set("Content-Disposition", "attachment; filename="+resource.FileName)
+					w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+					http.ServeFile(w, r, resource.Path)
+				} else if resource.Type == 2 {
+					http.Redirect(w, r, resource.Path, http.StatusTemporaryRedirect)
+				}
+			}
 		}
 	}
 }
@@ -64,9 +81,9 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var resp models.Response
-
-	if resource.Type == "url" {
-		resp, err = filestorage.URL(resource)
+	fmt.Println("middleware.go type = " + resource.Type)
+	if resource.Type == "link" {
+		resp, err = storage.URL(w, resource)
 	} else if resource.Type == "file" {
 		file, header, err := r.FormFile("file")
 
@@ -76,7 +93,7 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 		}
 
 		fmt.Printf("middleware.go url=%s;\n", resource.URL)
-		resp, err = filestorage.File(w, resource, file, header)
+		resp, err = storage.File(w, resource, file, header)
 
 		if err != nil {
 			panic(err)

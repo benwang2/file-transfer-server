@@ -45,5 +45,6 @@ func Chars(n int) string {
 	for i := range r {
 		r[i] = charset[rand.Intn(36)]
 	}
+
 	return string(r)
 }

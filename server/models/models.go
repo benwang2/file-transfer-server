@@ -11,7 +11,7 @@ const (
 
 type Resource struct {
 	Type       string `json:"type"`
-	URL        string `json:"url,omitempty"`
+	URL        string `json:"-,omitempty"`
 	URLType    string `json:"urlType,omitempty"`
 	Name       string `json:"name,omitempty"`
 	Expiration string `json:"expiration,omitempty"`
@@ -24,7 +24,7 @@ type Resource struct {
 	Header *multipart.FileHeader `json:"-"`
 
 	// URL
-	Destination string `json:"-"`
+	Destination string `json:"destination,omitempty"`
 }
 
 type DBResource struct {

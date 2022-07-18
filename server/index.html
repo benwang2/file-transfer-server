@@ -16,16 +16,20 @@
     >
       <input class="input file-input" type="file" name="file" multiple />
       <input type="text" id="f-url">
-      <input type="text" id="f-data" name="data" value='{"type":"file","url":""}' hidden>
+      <input type="text" id="f-data" name="data" value='{"type":"file","url":""}'>
       <button class="button" type="submit">Submit</button>
     </form>
     <script defer>
       let f_url = document.getElementById("f-url")
       let f_data = document.getElementById("f-data")
-      f_url.addEventListener('change',()=>{
-        console.log('{"url":"'+f_url.value+'"}')
-        f_data.setAttribute('value','{"type":"file","url":"'+f_url.value+'"}')
-      })
+      upd = ()=>{
+        if (f_url.value != ""){
+          f_data.setAttribute('value','{"type":"link","destination":"'+f_url.value+'"}')
+        } else {
+          f_data.setAttribute('value','{"type":"file"}')
+        }
+      f_url.addEventListener('change', upd)
+      upd()
     </script>
   </body>
 </html>

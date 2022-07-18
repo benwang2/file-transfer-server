@@ -22,11 +22,11 @@ func setupTables() {
 		"CREATE TABLE IF NOT EXISTS `resources` (" +
 			"`resourcePath` VARCHAR(2083) NOT NULL," +
 			"`resourceType` INT NOT NULL," +
-			"`fileName` VARCHAR(260) NOT NULL," +
+			"`fileName` VARCHAR(260) NULL," +
 			"`url` VARCHAR(64) NOT NULL," +
 			"`created` DATETIME NOT NULL," +
 			"`track` TINYINT(1) NOT NULL DEFAULT 0," +
-			"`size` INT NOT NULL," +
+			"`size` INT NULL," +
 			"`expires` DATETIME NULL," +
 			"`accessKey` VARCHAR(255) NULL," +
 			"UNIQUE INDEX `url_UNIQUE` (url ASC) VISIBLE," +
@@ -38,7 +38,7 @@ func setupTables() {
 	tx.Commit()
 }
 
-func SaveFileToDatabase(w http.ResponseWriter, resource *models.Resource) *models.Response {
+func SaveToDatabase(w http.ResponseWriter, resource *models.Resource) *models.Response {
 	tx, err := db.Begin()
 
 	if err != nil {
@@ -73,20 +73,36 @@ func SaveFileToDatabase(w http.ResponseWriter, resource *models.Resource) *model
 	}
 
 	castedType := 0
-	// fmt.Printf("Resource type = %s\n", resource.Type)
 	if resource.Type == "file" {
 		castedType = 1
+	} else if resource.Type == "link" {
+		castedType = 2
 	}
 
-	var query string = "INSERT INTO resources ( `fileName`, `resourcePath`, `url`, `resourceType`, `created`, `track`, `size`, `expires`, `accessKey` ) " +
-		`VALUES ( "%s", "%s", "%s", %d, "%s", %d, %d, "%s", "%s" )`
+	var query string
+	switch castedType {
+	case 1:
+		query = "INSERT INTO resources ( `fileName`, `resourcePath`, `url`, `resourceType`, `created`, `track`, `size`, `expires`, `accessKey` ) " +
+			`VALUES ( "%s", "%s", "%s", %d, "%s", %d, %d, "%s", "%s" )`
 
-	query = fmt.Sprintf(query, resource.Header.Filename, resource.Path, resource.URL, castedType, string(created), shouldTrack, int64(resource.Header.Size), string(expires), resource.Password)
+		query = fmt.Sprintf(query, resource.Header.Filename, resource.Path, resource.URL, castedType, string(created), shouldTrack, int64(resource.Header.Size), string(expires), resource.Password)
+		break
+	case 2:
+		query = "INSERT INTO resources ( `fileName`, `resourcePath`, `url`, `resourceType`, `created`, `track`, `size`, `expires`, `accessKey` ) " +
+			`VALUES ( "", "%s", "%s", "%d", "%s", "%d", "0", "%s", "%s" )`
+
+		query = fmt.Sprintf(query, resource.Destination, resource.URL, castedType, string(created), shouldTrack, string(expires), resource.Password)
+		break
+	}
+
 	if _, err := tx.Exec(query); err != nil {
+		log.Fatal(err)
 		return nil
 	}
 
-	err = tx.Commit()
+	if err := tx.Commit(); err != nil {
+		log.Fatal(err)
+	}
 
 	return &resp
 }
@@ -117,6 +133,10 @@ func generateUniqueURL(urlType string) string {
 		} else {
 			url = keygen.Chars(3)
 		}
+
+		if url == "api" {
+			url = ""
+		}
 	}
 
 	return url
@@ -129,7 +149,15 @@ func GetResourceByKey(w http.ResponseWriter, key string) (*models.DBResource, er
 			"WHERE `url`=\"" + key + "\"")
 	var resource models.DBResource
 
-	err := row.Scan(&resource.Path, &resource.Type, &resource.FileName, &resource.Created, &resource.Track, &resource.Size, &resource.Expires, &resource.AccessKey)
+	err := row.Scan(
+		&resource.Path,
+		&resource.Type,
+		&resource.FileName,
+		&resource.Created,
+		&resource.Track,
+		&resource.Size,
+		&resource.Expires,
+		&resource.AccessKey)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, err
