@@ -28,11 +28,8 @@ func main() {
 	}()
 	database.Start()
 	r := router.Router()
-
-	// "ben1:harbor-enquirer-written@tcp(107.174.63.205:3306)/mydb"
-
-	// fs := http.FileServer(http.Dir("build"))
-	// http.Handle("/", fs)
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	http.Handle("/", r)
 	fmt.Println("Starting server on port 3000, view at http://localhost:3000.")
 	log.Fatal(http.ListenAndServe("127.0.0.1:3000", r))
 }

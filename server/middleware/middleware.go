@@ -16,7 +16,7 @@ import (
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "text/html")
-	http.ServeFile(w, r, "index.html")
+	http.ServeFile(w, r, "static/index.html")
 }
 
 func RandKey(w http.ResponseWriter, r *http.Request) {
@@ -41,6 +41,11 @@ func Access(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
 			if resource.Type == 1 {
 				// Serve file download page
+				if resource.AccessKey == "" {
+					http.ServeFile(w, r, "static/access.html")
+				} else {
+
+				}
 			} else if resource.Type == 2 && resource.AccessKey == "" {
 				http.Redirect(w, r, resource.Path, http.StatusTemporaryRedirect)
 			}
