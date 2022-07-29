@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+html {
+    background-color: #0b0b0b;
+}
+
+body {
+    margin: 10rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    background-color: #282828;
+    padding: 4px 4px 1rem 4px;
+    font-family: 'Roboto', sans-serif;
+    min-width: 128; max-width: 384px; width: 90%;
+    min-height: 128px; max-height: max-content;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    gap: .2rem;
+}
+
+.container > h1 {
+    font-size: 1.5rem;
+    width: 50%;
+    text-align: center;
+}
+
+.container > h2 {
+    font-size: 1rem;
+    width: 50%;
+    text-align: center;
+}
+
+
+.primary-button{
+    background-color: #3500D4;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    font-size: 1rem;
+    padding: 8px;
+}
+
+.container > input[type=button]:hover {
+    cursor: pointer;
+}
+
+.row {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    margin: 0px 8px 0px 8px;
+    justify-content: space-between;
+}
+
+.search {
+    background-color: #38353D;
+    width: 85%;
+    height: 36px;
+    border-radius: 100px;
+    padding: 0 10px 0 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+::placeholder {
+    color: #D4D4D4;
+}
+
+.search > input[type=text] {
+    background: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    caret-color: white;
+    color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+}
+
+.search > input:focus {
+    border: none;
+    outline: none
+}
+
+form > .search > input[type=button] {
+    height: 36px;
+    width: 36px;
+    background: none;
+    border: none;
+    background-image: url("addfile.svg");
+    background-size: cover;
+    cursor: pointer;
+}
+
+.underline::after{
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    background-color: #AEAEAE;
+    bottom: 0;
+}

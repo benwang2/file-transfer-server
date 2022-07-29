@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/index.css">
+    <title>Document</title>
+    <script defer src="/static/download.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="underline">Download file</h2>
+        <div class="row">
+            <span style="color:#A3A3A3">Uploaded:</span>
+            <span>{{.CreationDate}}</span>
+        </div>
+        <div class="row">
+            <span style="color:#A3A3A3">Name:</span>
+            <span>{{.FileName}}</span>
+        </div>
+        <div class="row">
+            <span style="color:#A3A3A3">Size:</span>
+            <span>{{.FileSize}}</span>
+        </div>
+        <input type="button" class="primary-button" value="Download" onclick="downloadFile()">
+    </div>
+</body>
+
+</html>

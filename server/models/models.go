@@ -48,3 +48,9 @@ type Response struct {
 type Secrets struct {
 	DatabaseURL string `json:"databaseUrl"`
 }
+
+type FileAccess struct {
+	CreationDate string
+	FileName     string
+	FileSize     string
+}

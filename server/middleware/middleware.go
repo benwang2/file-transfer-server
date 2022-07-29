@@ -4,9 +4,11 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"server/database"
+	"server/filesize"
 	"server/keygen"
 	"server/models"
 	"server/storage"
@@ -24,7 +26,7 @@ func RandKey(w http.ResponseWriter, r *http.Request) {
 }
 
 func Access(w http.ResponseWriter, r *http.Request) {
-
+	templ := template.Must(template.ParseFiles("./static/access.html"))
 	vars := mux.Vars(r)
 	resource, err := database.GetResourceByKey(w, vars["key"])
 
@@ -42,7 +44,11 @@ func Access(w http.ResponseWriter, r *http.Request) {
 			if resource.Type == 1 {
 				// Serve file download page
 				if resource.AccessKey == "" {
-					http.ServeFile(w, r, "static/access.html")
+					var details models.FileAccess
+					details.CreationDate = resource.Created
+					details.FileName = resource.FileName
+					details.FileSize = filesize.HumanFileSize(float64(resource.Size))
+					templ.Execute(w, details)
 				} else {
 
 				}
@@ -111,4 +117,24 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(resp)
+}
+
+func Download(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	resource, err := database.GetResourceByKey(w, vars["key"])
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			fmt.Printf("Found no resource by key=%s\n", vars["key"])
+			http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		} else {
+			panic(err)
+		}
+	} else {
+		if r.Method == "GET" {
+			w.Header().Set("Content-Disposition", "attachment; filename="+resource.FileName)
+			w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+			http.ServeFile(w, r, resource.Path)
+		}
+	}
 }
