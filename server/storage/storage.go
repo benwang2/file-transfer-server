@@ -68,8 +68,7 @@ func File(w http.ResponseWriter, r models.Resource, f multipart.File, h *multipa
 }
 
 func URL(w http.ResponseWriter, r models.Resource) (models.Response, error) {
-	fmt.Println("Processing url")
-	fmt.Println("link to " + r.Destination)
+	fmt.Printf("link to \"%s\"\n", r.Destination)
 	var resp *models.Response
 
 	resp = database.SaveToDatabase(w, &r)

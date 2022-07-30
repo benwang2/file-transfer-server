@@ -27,8 +27,10 @@ fileInput.addEventListener("change", (ev) => {
 urlInput.addEventListener("change", (ev) => {
     urlInput.setAttribute("placeholder","http://example.org")
     data["type"] = "link"
+    data["destination"] = urlInput.value
     dataInput.setAttribute("value", JSON.stringify(data))
     console.log(data)
 })
 
+data["destination"] = urlInput.value
 dataInput.setAttribute("value", JSON.stringify(data))

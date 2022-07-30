@@ -44,6 +44,7 @@ func Access(w http.ResponseWriter, r *http.Request) {
 			if resource.Type == 1 {
 				// Serve file download page
 				if resource.AccessKey == "" {
+					fmt.Printf("Serving file access page for %s\n", resource.FileName)
 					var details models.FileAccess
 					details.CreationDate = resource.Created
 					details.FileName = resource.FileName
@@ -52,7 +53,8 @@ func Access(w http.ResponseWriter, r *http.Request) {
 				} else {
 
 				}
-			} else if resource.Type == 2 && resource.AccessKey == "" {
+			} else if resource.Type == 2 {
+				fmt.Printf("Redirecting user to %s\n", resource.Path)
 				http.Redirect(w, r, resource.Path, http.StatusTemporaryRedirect)
 			}
 		} else if r.Method == "POST" {
