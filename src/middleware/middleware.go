@@ -7,11 +7,11 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"server/database"
-	"server/filesize"
-	"server/keygen"
-	"server/models"
-	"server/storage"
+	"src/database"
+	"src/filesize"
+	"src/keygen"
+	"src/models"
+	"src/storage"
 
 	"github.com/gorilla/mux"
 )

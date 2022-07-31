@@ -11,8 +11,8 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
-	"server/database"
-	"server/models"
+	"src/database"
+	"src/models"
 	"strings"
 )
 

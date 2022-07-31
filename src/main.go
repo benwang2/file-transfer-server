@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"server/database"
-	"server/env"
-	"server/router"
+	"src/database"
+	"src/env"
+	"src/router"
 	"syscall"
 )
 

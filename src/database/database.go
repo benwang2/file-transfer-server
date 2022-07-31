@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"server/keygen"
-	"server/models"
+	"src/keygen"
+	"src/models"
 	"strings"
 	"time"
 
